@@ -1,0 +1,9 @@
+---
+slug: :burnt_toast
+depends:
+  mikutter: 3.6.4
+  plugin: []
+version: '1.0'
+author: 
+name: BurntToast plugin
+description: BurntToastを使ってmikutterからWindows10へ通知を送るプラグインです。
