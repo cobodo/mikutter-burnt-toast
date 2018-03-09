@@ -4,7 +4,7 @@ PowerShellから通知を送るユーティリティコマンド [BurntToast](ht
 なお、中身はmikutter本体同梱の `core/plugin/libnotify/notify-send.rb` とほぼ同じです。
 
 ## 使い方
-まずPowershellを管理者権限で開き、以下のコマンドを実行してBurntToastをインストールします。
+まずPowerShellを管理者権限で開き、以下のコマンドを実行してBurntToastをインストールします。
 
 ```powershell
 > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
