@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+require 'cgi'
 
 Plugin.create(:burnt_toast) do
   on_popup_notify do |user, text, &stop|
@@ -7,17 +8,20 @@ Plugin.create(:burnt_toast) do
       icon_path(Skin['notfound.png'])
     }.next{|icon_file_name|
       command = ["powershell.exe", "-command", "New-BurntToastNotification", "-Text"]
-      if(text.is_a? Diva::Model)
-        text = "'#{text.to_s}'"
+      if text.is_a?(Diva::Model)
+        text = text.to_s
       end
       if user
         command << "'#{user.title}',"
       end
+      text = CGI.unescapeHTML(text).gsub(/'/) { "''" }
       command << "'#{text}'"
       if user
         win_path = wsl_path_to_windows_path(icon_file_name)
         command << "-AppLogo" << "'#{win_path}'"
       end
+      pp command
+      $stdout.flush
       bg_system(*command)
     }.terminate
     stop.call
@@ -54,7 +58,7 @@ Plugin.create(:burnt_toast) do
     File.join(Environment::TMPDIR, 'burnt_toast', 'icon').freeze
   end
 
-  UserConfig[:burnt_toast_rootfs_path] = ''
+  UserConfig[:burnt_toast_rootfs_path] ||= ''
 
   settings "BurntToast" do
     input 'Windows側から見たWSL rootfsの位置', :burnt_toast_rootfs_path
