@@ -8,7 +8,9 @@ Plugin.create(:burnt_toast) do
       icon_path(Skin['notfound.png'])
     }.next{|icon_file_name|
       command = ["powershell.exe", "-command", "New-BurntToastNotification", "-Text"]
-      if text.is_a?(Diva::Model)
+      if text.respond_to?(:description_plain)
+        text = text.description_plain
+      elsif text.is_a?(Diva::Model)
         text = text.to_s
       end
       if user
